@@ -20,6 +20,20 @@ const userSchema = new mongoose.Schema(
             required: true,
             minlength: 6,
         },
+        requests: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                default: [],
+            },
+        ],
+        contacts: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                default: [],
+            },
+        ],
         profilePic: {
             type: String,
             default: '',
