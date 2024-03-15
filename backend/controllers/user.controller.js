@@ -43,16 +43,10 @@ export const getRequests = async (req, res) => {
 export const sendContactRequest = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
-        const { id: requestId } = req.params;
-
-        if (loggedInUserId === requestId) {
-            return res.status(400).json({
-                error: 'Cannot send a request to yourself!',
-            });
-        }
+        const { username } = req.params;
 
         let sender = await User.findById(loggedInUserId);
-        let receiver = await User.findById(requestId);
+        let receiver = await User.findOne({ username });
 
         if (!sender) {
             return res.status(400).json({
@@ -63,6 +57,14 @@ export const sendContactRequest = async (req, res) => {
         if (!receiver) {
             return res.status(400).json({
                 error: 'User does not exist',
+            });
+        }
+
+        const requestId = receiver._id;
+
+        if (loggedInUserId === requestId) {
+            return res.status(400).json({
+                error: 'Cannot send a request to yourself!',
             });
         }
 
@@ -78,6 +80,12 @@ export const sendContactRequest = async (req, res) => {
         if (receiver.requests.includes(loggedInUserId)) {
             return res.status(400).json({
                 error: 'Request already sent',
+            });
+        }
+
+        if (sender.requests.includes(requestId)) {
+            return res.status(400).json({
+                error: 'Pending request from that user',
             });
         }
 
@@ -167,7 +175,7 @@ export const rejectRequest = async (req, res) => {
         await user.save();
         res.status(201).json(user.contacts);
     } catch (error) {
-        console.log('Error in acceptRequest: ', error.message);
+        console.log('Error in rejectRequest: ', error.message);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
