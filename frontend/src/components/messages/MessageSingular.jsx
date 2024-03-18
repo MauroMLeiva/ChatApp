@@ -16,7 +16,7 @@ export const MessageSingular = () => {
                 automatically. Why am I not just using lorem ipsum, I have no
                 ideaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.
             </div>
-            <div className='chat-footer opacity-80 text-xs flex gap-1 items-center text-black'>
+            <div className='chat-footer opacity-80 text-xs flex gap-1 items-center text-white'>
                 14:37
             </div>
         </div>

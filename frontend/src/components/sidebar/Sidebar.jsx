@@ -6,7 +6,7 @@ import { Search } from './Search';
 
 export const Sidebar = () => {
     return (
-        <div className='bg-secondary border-r border-primary p-4 flex flex-col min-h-lvh'>
+        <div className='bg-secondary border-r border-primary p-4 flex flex-col h-lvh overflow-hidden'>
             <Search />
             <div className='divider divider-primary px-3 mb-1' />
             <AddContact />
