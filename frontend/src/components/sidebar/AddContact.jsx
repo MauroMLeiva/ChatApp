@@ -27,12 +27,12 @@ export const AddContact = () => {
                                     placeholder='Username'
                                 />
 
-                                <div className='flex justify-between'>
+                                <div className='flex justify-end'>
                                     <button className='w-[60px] btn btn-primary'>
                                         Cancel
                                     </button>
 
-                                    <button className='w-[60px] btn btn-primary'>
+                                    <button className='w-[60px] btn btn-primary ml-4'>
                                         Add
                                     </button>
                                 </div>

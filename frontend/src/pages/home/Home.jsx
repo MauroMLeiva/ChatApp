@@ -3,8 +3,6 @@ import { RequestList } from '../../components/request-list/RequestList';
 import { Sidebar } from '../../components/sidebar/Sidebar';
 
 export const Home = () => {
-    // Global state "SidebarIsOpen", View: "Messages"/"Requests"
-    const open = true;
     const view = 'requests';
 
     return (
@@ -29,13 +27,3 @@ export const Home = () => {
         </div>
     );
 };
-
-{
-    /* <div className='flex w-11/12 h-[94%] rounded-lg overflow-hidden bg-secondary bg-clip-padding'>
-    <div className={open ? 'flex' : 'hidden'}>
-        <Sidebar />
-    </div>
-
-    {view == 'messages' ? <MessageContainer /> : <></>}
-</div>; */
-}

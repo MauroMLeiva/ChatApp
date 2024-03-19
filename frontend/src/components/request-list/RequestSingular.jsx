@@ -5,9 +5,66 @@ export const RequestSingular = ({ req }) => {
                 {req}
             </span>
 
-            <div className=' justify-end items-end'>
-                <button className='btn btn-base-100 mr-1'>Accept</button>
-                <button className='btn btn-base-100'>Deny</button>
+            <div className='flex justify-end items-end'>
+                <button
+                    className='btn btn-base-100 flex gap-2 items-center rounded p-2 py-1 text-white mr-2'
+                    onClick={() =>
+                        document
+                            .getElementById(`accept_modal_${req}`)
+                            .showModal()
+                    }
+                >
+                    <p className='font-semibold'>Accept</p>
+                </button>
+
+                <dialog id={`accept_modal_${req}`} className='modal'>
+                    <div className='modal-box bg-secondary flex flex-col font-bold text-xl text-center text-black'>
+                        <span>Accept contact request from {req}?</span>
+
+                        <div className='modal-action justify-center'>
+                            <form method='dialog'>
+                                <div className='flex justify-end'>
+                                    <button className='w-[60px] btn btn-primary'>
+                                        Cancel
+                                    </button>
+
+                                    <button className='w-[60px] btn btn-primary ml-4'>
+                                        Accept
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
+
+                <button
+                    className='btn btn-base-100 flex gap-2 items-center rounded p-2 py-1 text-white'
+                    onClick={() =>
+                        document.getElementById(`deny_modal_${req}`).showModal()
+                    }
+                >
+                    <p className='font-semibold'>Deny</p>
+                </button>
+
+                <dialog id={`deny_modal_${req}`} className='modal'>
+                    <div className='modal-box bg-secondary flex flex-col font-bold text-xl text-center text-black'>
+                        <span>Deny contact request from {req}?</span>
+
+                        <div className='modal-action justify-center'>
+                            <form method='dialog'>
+                                <div className='flex justify-end'>
+                                    <button className='w-[60px] btn btn-primary'>
+                                        Cancel
+                                    </button>
+
+                                    <button className='w-[60px] btn btn-primary ml-4'>
+                                        Deny
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </div>
         </div>
     );
