@@ -1,10 +1,11 @@
 import { BiLogOut } from 'react-icons/bi';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const LogoutBtn = () => {
-    // const dispatch = useDispatch();
+    const { startLogout } = useAuthStore();
 
     const handleLogout = () => {
-        console.log('Logout');
+        startLogout();
     };
 
     return (

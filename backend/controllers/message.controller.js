@@ -1,11 +1,15 @@
 import Conversation from '../models/conversation.model.js';
 import Message from '../models/message.model.js';
+import User from '../models/user.model.js';
 
 export const sendMessage = async (req, res) => {
     try {
         const { message } = req.body;
-        const { id: receiverId } = req.params;
-        const senderId = req.user._id;
+        const { username } = req.params;
+        const senderId = req.uid;
+
+        const receiver = await User.findOne({ username });
+        const receiverId = receiver._id;
 
         let conversation = await Conversation.findOne({
             participants: { $all: [senderId, receiverId] },
@@ -40,8 +44,11 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
     try {
-        const { id: chatId } = req.params;
-        const senderId = req.user._id;
+        const { username } = req.params;
+        const senderId = req.uid;
+
+        const receiver = await User.findOne({ username });
+        const chatId = receiver._id;
 
         const conversation = await Conversation.findOne({
             participants: { $all: [senderId, chatId] },

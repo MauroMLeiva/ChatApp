@@ -16,13 +16,30 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type,x-token'
+    );
+    next();
+});
+app.options('*', function (req, res) {
+    res.sendStatus(200);
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
     // Root route
-    res.send('Hello world!!!');
 });
 
 app.listen(PORT, () => {

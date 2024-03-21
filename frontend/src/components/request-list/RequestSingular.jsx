@@ -1,4 +1,16 @@
+import { useChatStore } from '../../hooks/useChatStore';
+
 export const RequestSingular = ({ req }) => {
+    const { acceptRequest, rejectRequest } = useChatStore();
+
+    const handleAccept = () => {
+        acceptRequest(req);
+    };
+
+    const handleReject = () => {
+        rejectRequest(req);
+    };
+
     return (
         <div className='bg-primary w-[90vw] sm:w-[460px] lg:w-[700px] xl:w-[900px] rounded-lg px-4 py-4 mb-2 flex items-center justify-end'>
             <span className='text-white text-xl font-semibold mr-auto'>
@@ -28,7 +40,10 @@ export const RequestSingular = ({ req }) => {
                                         Cancel
                                     </button>
 
-                                    <button className='w-[60px] btn btn-primary ml-4'>
+                                    <button
+                                        className='w-[60px] btn btn-primary ml-4'
+                                        onClick={handleAccept}
+                                    >
                                         Accept
                                     </button>
                                 </div>
@@ -57,7 +72,10 @@ export const RequestSingular = ({ req }) => {
                                         Cancel
                                     </button>
 
-                                    <button className='w-[60px] btn btn-primary ml-4'>
+                                    <button
+                                        className='w-[60px] btn btn-primary ml-4'
+                                        onClick={handleReject}
+                                    >
                                         Deny
                                     </button>
                                 </div>

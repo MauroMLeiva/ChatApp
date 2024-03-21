@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { MessageContainer } from '../../components/messages/MessageContainer';
 import { RequestList } from '../../components/request-list/RequestList';
 import { Sidebar } from '../../components/sidebar/Sidebar';
+import { useChatStore } from '../../hooks/useChatStore';
+import { useUiStore } from '../../hooks/useUiStore';
 
 export const Home = () => {
-    // Receive view from global state
-    const view = 'messages';
+    const { view } = useUiStore();
+
+    const { getContacts, getRequests } = useChatStore();
+
+    useEffect(() => {
+        getContacts();
+        getRequests();
+    }, []);
 
     return (
         <div className='drawer md:drawer-open'>

@@ -1,6 +1,26 @@
 import { IoMdPersonAdd } from 'react-icons/io';
+import { useForm } from '../../hooks/useForm';
+import { useChatStore } from '../../hooks/useChatStore';
+import toast from 'react-hot-toast';
+
+const initalForm = {
+    username: '',
+};
 
 export const AddContact = () => {
+    const { username, onInputChange, onResetForm } = useForm(initalForm);
+    const { sendRequest } = useChatStore();
+
+    const handleAdd = () => {
+        if (username === '') {
+            toast('Please enter username to add');
+            return;
+        }
+
+        sendRequest(username);
+        onResetForm();
+    };
+
     return (
         <>
             <button
@@ -27,6 +47,9 @@ export const AddContact = () => {
                                     type='text'
                                     className='border text-sm rounded-lg block w-[300px] p-2.5 bg-secondary text-black border-primary mb-4'
                                     placeholder='Username'
+                                    name='username'
+                                    value={username}
+                                    onChange={onInputChange}
                                 />
 
                                 <div className='flex justify-end'>
@@ -34,7 +57,10 @@ export const AddContact = () => {
                                         Cancel
                                     </button>
 
-                                    <button className='w-[60px] btn btn-primary ml-4'>
+                                    <button
+                                        className='w-[60px] btn btn-primary ml-4'
+                                        onClick={handleAdd}
+                                    >
                                         Add
                                     </button>
                                 </div>

@@ -14,7 +14,11 @@ export const getUsersForSidebar = async (req, res) => {
 
         const users = user.contacts;
 
-        res.status(200).json(users);
+        const filteredUsers = await User.find({
+            username: { $in: users },
+        }).select('username');
+
+        res.status(200).json(filteredUsers);
     } catch (error) {
         console.log('Error in getUsersForSidebar: ', error.message);
         res.status(500).json({ error: 'Internal server error' });

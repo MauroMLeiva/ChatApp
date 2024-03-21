@@ -1,5 +1,6 @@
 import { IoChevronBack } from 'react-icons/io5';
 import { RequestSingular } from './RequestSingular';
+import { useChatStore } from '../../hooks/useChatStore';
 
 const HasNoRequests = () => {
     return (
@@ -16,8 +17,8 @@ const HasNoRequests = () => {
 };
 
 const HasRequests = () => {
-    // Receive from global state
-    const reqs = ['waldomero', 'biri', 'juerzo', 'hurón'];
+    const { requests } = useChatStore();
+
     return (
         <>
             <div className='bg-primary px-4 py-4 mb-2 flex items-center'>
@@ -31,7 +32,7 @@ const HasRequests = () => {
             </div>
 
             <div className='flex flex-col items-center px-4 flex-1 mt-2 overflow-y-auto overflow-x-hidden'>
-                {reqs?.map((user) => (
+                {requests?.map((user) => (
                     <RequestSingular key={user} req={user} />
                 ))}
             </div>

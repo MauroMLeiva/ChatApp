@@ -4,16 +4,21 @@ import './App.css';
 import { Home } from './pages/home/Home';
 import { Login } from './pages/login/Login';
 import { SignUp } from './pages/signup/SignUp';
-import { useSelector } from 'react-redux';
 import { Loading } from './components/ui/Loading';
+import { useEffect } from 'react';
+import { useAuthStore } from './hooks/useAuthStore';
 
 export const App = () => {
-    const { status } = useSelector((state) => state.auth);
+    const { checkAuthToken, status } = useAuthStore();
     const auth = status === 'authenticated';
 
-    // if (status == 'checking') {
-    //     return <Loading />;
-    // }
+    useEffect(() => {
+        checkAuthToken();
+    }, []);
+
+    if (status == 'checking') {
+        return <Loading />;
+    }
 
     return (
         <>

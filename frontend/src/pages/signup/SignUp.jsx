@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 const formData = {
-    name: '',
+    firstName: '',
     lastName: '',
     password: '',
     confirmPassword: '',
@@ -11,11 +12,10 @@ const formData = {
 };
 
 export const SignUp = () => {
-    const dispatch = useDispatch();
-    const { status } = useSelector((state) => state.auth);
+    const { status, startSignUp } = useAuthStore();
 
     const {
-        name,
+        firstName,
         lastName,
         password,
         confirmPassword,
@@ -26,7 +26,13 @@ export const SignUp = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log('Create Account');
+        startSignUp({
+            firstName,
+            lastName,
+            password,
+            confirmPassword,
+            username,
+        });
     };
 
     return (
@@ -54,8 +60,8 @@ export const SignUp = () => {
                                 type='text'
                                 className='grow'
                                 placeholder='First Name'
-                                name='name'
-                                value={name}
+                                name='firstName'
+                                value={firstName}
                                 onChange={onInputChange}
                             />
                         </label>

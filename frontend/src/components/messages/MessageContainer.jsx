@@ -2,6 +2,7 @@ import { IoChevronBack } from 'react-icons/io5';
 
 import { MessageInput } from './MessageInput';
 import { Messages } from './Messages';
+import { useChatStore } from '../../hooks/useChatStore';
 
 const NoChatSelected = () => {
     return (
@@ -18,6 +19,7 @@ const NoChatSelected = () => {
 };
 
 const ChatSelected = () => {
+    const { activeConversation } = useChatStore();
     return (
         <>
             <div className='bg-primary px-4 py-4 mb-2 flex items-center'>
@@ -35,7 +37,7 @@ const ChatSelected = () => {
                     />
                 </div>
                 <span className='label-text mr-1'> To: </span>
-                <span className='font-bold'>John Doe</span>
+                <span className='font-bold'>{activeConversation}</span>
             </div>
 
             <Messages />
@@ -45,10 +47,11 @@ const ChatSelected = () => {
 };
 export const MessageContainer = () => {
     // Receive from global state
-    const chatSelected = true;
+    const { isChatSelected } = useChatStore();
+
     return (
         <div className='flex flex-col w-lvw h-lvh'>
-            {chatSelected ? <ChatSelected /> : <NoChatSelected />}
+            {isChatSelected ? <ChatSelected /> : <NoChatSelected />}
         </div>
     );
 };

@@ -1,6 +1,12 @@
-export const MessageSingular = () => {
+export const MessageSingular = ({ msg, uid }) => {
+    const mine = msg[1] === uid;
+    const time = new Date(msg[2]).toLocaleTimeString(navigator.language, {
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+
     return (
-        <div className='chat chat-end'>
+        <div className={`chat ${mine ? 'chat-end' : 'chat-start'}`}>
             <div className='chat-image avatar'>
                 <div className='w-10 rounded-full'>
                     <img
@@ -10,14 +16,15 @@ export const MessageSingular = () => {
                 </div>
             </div>
 
-            <div className={`chat-bubble text-white bg-primary break-words`}>
-                This is a long message, which I am using to see how the text
-                overflows and if it switches to a new line. It should do so
-                automatically. Why am I not just using lorem ipsum, I have no
-                ideaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.
+            <div
+                className={`chat-bubble text-white ${
+                    mine ? ' bg-primary' : 'bg-gray-600'
+                } break-words`}
+            >
+                {msg[0]}
             </div>
             <div className='chat-footer opacity-80 text-xs flex gap-1 items-center text-white'>
-                14:37
+                {time}
             </div>
         </div>
     );

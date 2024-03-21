@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 const formData = {
     username: '',
@@ -9,11 +9,11 @@ const formData = {
 
 export const Login = () => {
     const { username, password, onInputChange } = useForm(formData);
-    const { status } = useSelector((state) => state.auth);
+    const { startLogin, status } = useAuthStore();
 
     const handleLogin = (event) => {
         event.preventDefault();
-        console.log('Login');
+        startLogin({ username, password });
     };
 
     return (

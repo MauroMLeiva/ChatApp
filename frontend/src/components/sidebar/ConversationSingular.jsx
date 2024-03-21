@@ -1,7 +1,21 @@
-export const ConversationSingular = () => {
+import { useChatStore } from '../../hooks/useChatStore';
+import { useUiStore } from '../../hooks/useUiStore';
+
+export const ConversationSingular = ({ username }) => {
+    const { selectConversation } = useChatStore();
+    const { setMsgsView } = useUiStore();
+
+    const handleClick = () => {
+        selectConversation(username);
+        setMsgsView();
+    };
+
     return (
         <>
-            <div className='flex gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white'>
+            <button
+                className='flex gap-2 items-center text-start rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white'
+                onClick={handleClick}
+            >
                 <div className='avatar mr-2 online'>
                     <div className='w-12 rounded-full'>
                         <img
@@ -11,9 +25,9 @@ export const ConversationSingular = () => {
                     </div>
                 </div>
                 <div className='flex flex-col flex-1'>
-                    <p className='font-bold'>Username</p>
+                    <p className='font-bold'>{username}</p>
                 </div>
-            </div>
+            </button>
 
             <div className='divider my-0 py-0 h-1' />
         </>
