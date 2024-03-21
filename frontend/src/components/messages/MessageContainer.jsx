@@ -44,7 +44,8 @@ const ChatSelected = () => {
     );
 };
 export const MessageContainer = () => {
-    const chatSelected = false;
+    // Receive from global state
+    const chatSelected = true;
     return (
         <div className='flex flex-col w-lvw h-lvh'>
             {chatSelected ? <ChatSelected /> : <NoChatSelected />}

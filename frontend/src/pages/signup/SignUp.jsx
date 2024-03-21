@@ -1,4 +1,34 @@
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from '../../hooks/useForm';
+
+const formData = {
+    name: '',
+    lastName: '',
+    password: '',
+    confirmPassword: '',
+    username: '',
+};
+
 export const SignUp = () => {
+    const dispatch = useDispatch();
+    const { status } = useSelector((state) => state.auth);
+
+    const {
+        name,
+        lastName,
+        password,
+        confirmPassword,
+        username,
+        onInputChange,
+    } = useForm(formData);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        console.log('Create Account');
+    };
+
     return (
         <div
             className='flex flex-col items-center justify-center min-w-[300px]
@@ -24,6 +54,9 @@ export const SignUp = () => {
                                 type='text'
                                 className='grow'
                                 placeholder='First Name'
+                                name='name'
+                                value={name}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
@@ -42,6 +75,9 @@ export const SignUp = () => {
                                 type='text'
                                 className='grow'
                                 placeholder='Last Name'
+                                name='lastName'
+                                value={lastName}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
@@ -60,12 +96,15 @@ export const SignUp = () => {
                                 type='text'
                                 className='grow'
                                 placeholder='Username'
+                                name='username'
+                                value={username}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
 
                     <div>
-                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4'>
+                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4 text-black'>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 16 16'
@@ -82,12 +121,15 @@ export const SignUp = () => {
                                 type='password'
                                 className='grow'
                                 placeholder='Password'
+                                name='password'
+                                value={password}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
 
                     <div>
-                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4'>
+                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4 text-black'>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 16 16'
@@ -104,19 +146,35 @@ export const SignUp = () => {
                                 type='password'
                                 className='grow'
                                 placeholder='Confirm password'
+                                name='confirmPassword'
+                                value={confirmPassword}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
 
                     <div>
-                        <button className='btn btn-md btn-primary btn-block mt-8'>
-                            CREATE ACCOUNT
+                        <button
+                            className='btn btn-md btn-primary btn-block mt-8'
+                            onClick={handleSubmit}
+                            disabled={status == 'checking'}
+                        >
+                            {status == 'checking' ? (
+                                <span className='loading loading-spinner text-secondary'></span>
+                            ) : (
+                                'CREATE ACCOUNT'
+                            )}
                         </button>
                     </div>
 
                     <div className='text-black mt-4 text-end'>
                         <span>Have an account? </span>
-                        <a href='#'>Login</a>
+                        <Link
+                            to='/login'
+                            className='hover:text-primary font-bold'
+                        >
+                            Login
+                        </Link>
                     </div>
                 </form>
             </div>

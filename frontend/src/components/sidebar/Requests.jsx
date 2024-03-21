@@ -16,7 +16,7 @@ export const Requests = () => {
             }
             onClick={handleClick}
         >
-            <div className='flex gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary '>
+            <div className='flex gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary'>
                 <RiInboxArchiveFill className='w-8 h-8' />
 
                 <p className='font-semibold'>Requests ({reqs.length})</p>

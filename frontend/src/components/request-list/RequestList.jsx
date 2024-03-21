@@ -16,6 +16,7 @@ const HasNoRequests = () => {
 };
 
 const HasRequests = () => {
+    // Receive from global state
     const reqs = ['waldomero', 'biri', 'juerzo', 'hurón'];
     return (
         <>
@@ -39,6 +40,7 @@ const HasRequests = () => {
 };
 
 export const RequestList = () => {
+    // Receive from global state
     const reqs = ['waldomero', 'biri', 'juerzo'];
 
     return (

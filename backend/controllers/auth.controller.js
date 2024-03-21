@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 import User from '../models/user.model.js';
-import generateTokenAndSetCookie from '../helpers/generateToken.js';
+import { generateJWT } from '../helpers/generateToken.js';
 
 export const signup = async (req, res) => {
     try {
@@ -38,18 +38,19 @@ export const signup = async (req, res) => {
         });
 
         if (newUser) {
-            // Generate JWT Token
-            generateTokenAndSetCookie(newUser._id, res);
-
             // Save user to DB
             await newUser.save();
 
+            // Generate JWT Token
+            const token = await generateJWT(newUser.id, newUser.username);
+
             res.status(201).json({
-                _id: newUser._id,
+                uid: newUser.id,
                 firstName: newUser.firstName,
                 lastName: newUser.lastName,
                 username: newUser.username,
                 profilePic: newUser.profilePic,
+                token,
             });
         } else {
             res.status(400).json({ error: 'Invalid user data' });
@@ -78,14 +79,17 @@ export const login = async (req, res) => {
         }
 
         //Generate JWT and set in cookie
-        generateTokenAndSetCookie(user._id, res);
+        const token = await generateJWT(user.id, username);
 
         res.status(200).json({
-            _id: user._id,
+            uid: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             username: user.username,
             profilePic: user.profilePic,
+            requests: user.requests,
+            contacts: user.contacts,
+            token,
         });
     } catch (error) {
         console.log('Error in login controller', error.message);
@@ -93,12 +97,15 @@ export const login = async (req, res) => {
     }
 };
 
-export const logout = (req, res) => {
-    try {
-        res.cookie('jwt', '', { maxAge: 0 });
-        res.status(200).json({ message: 'Logged out succesfully' });
-    } catch (error) {
-        console.log('Error in logout controller', error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+export const renewToken = async (req, res = response) => {
+    const { uid, username } = req;
+
+    // Generate JWT
+    const token = await generateJWT(uid, username);
+    res.json({
+        ok: true,
+        uid,
+        username,
+        token,
+    });
 };

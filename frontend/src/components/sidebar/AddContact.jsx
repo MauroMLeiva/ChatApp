@@ -4,11 +4,13 @@ export const AddContact = () => {
     return (
         <>
             <button
-                className='btn btn-secondary flex gap-2 justify-start items-center rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white'
+                className='bg-secondary text-black hover:text-white'
                 onClick={() => document.getElementById('add_modal').showModal()}
             >
-                <IoMdPersonAdd className='w-8 h-8' />
-                <p className='font-semibold'>Add a new Contact</p>
+                <div className='flex gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary'>
+                    <IoMdPersonAdd className='w-8 h-8' />
+                    <p className='font-semibold'>Add a new Contact</p>
+                </div>
             </button>
 
             <div>

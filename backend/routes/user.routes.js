@@ -1,5 +1,5 @@
 import express from 'express';
-import protectRoute from '../middleware/protectRoute.js';
+import { JWTvalidator } from '../middleware/jwt-validator.js';
 import {
     acceptRequest,
     getRequests,
@@ -10,10 +10,12 @@ import {
 
 const router = express.Router();
 
-router.get('/', protectRoute, getUsersForSidebar);
-router.get('/requests', protectRoute, getRequests);
-router.post('/add/:username', protectRoute, sendContactRequest);
-router.post('/accept/:id', protectRoute, acceptRequest);
-router.post('/reject/:id', protectRoute, rejectRequest);
+router.use(JWTvalidator);
+
+router.get('/', getUsersForSidebar);
+router.get('/requests', getRequests);
+router.post('/add/:username', sendContactRequest);
+router.post('/accept/:username', acceptRequest);
+router.post('/reject/:username', rejectRequest);
 
 export default router;

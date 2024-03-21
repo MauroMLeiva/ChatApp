@@ -1,4 +1,21 @@
+import { Link } from 'react-router-dom';
+import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from 'react-redux';
+
+const formData = {
+    username: '',
+    password: '',
+};
+
 export const Login = () => {
+    const { username, password, onInputChange } = useForm(formData);
+    const { status } = useSelector((state) => state.auth);
+
+    const handleLogin = (event) => {
+        event.preventDefault();
+        console.log('Login');
+    };
+
     return (
         <div
             className='flex flex-col items-center justify-center min-w-[300px]
@@ -24,12 +41,15 @@ export const Login = () => {
                                 type='text'
                                 className='grow'
                                 placeholder='Username'
+                                name='username'
+                                value={username}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
 
                     <div>
-                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4'>
+                        <label className='input input-bordered input-primary bg-inherit flex items-center gap-2 mt-4 text-black'>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 16 16'
@@ -45,25 +65,36 @@ export const Login = () => {
                             <input
                                 type='password'
                                 className='grow'
-                                value='password'
+                                placeholder='******'
+                                name='password'
+                                value={password}
+                                onChange={onInputChange}
                             />
                         </label>
                     </div>
 
                     <div>
-                        <button className='btn btn-md btn-primary btn-block mt-4'>
-                            LOGIN
+                        <button
+                            className='btn btn-md btn-primary btn-block mt-4'
+                            disabled={status == 'checking'}
+                            onClick={handleLogin}
+                        >
+                            {status == 'checking' ? (
+                                <span className='loading loading-spinner text-secondary'></span>
+                            ) : (
+                                'LOGIN'
+                            )}
                         </button>
                     </div>
 
-                    <div className='divider divider-primary mt-6 text-primary'>
-                        OR
-                    </div>
-
-                    <div>
-                        <button className='btn btn-md btn-primary btn-block mt-3'>
-                            CREATE ACCOUNT
-                        </button>
+                    <div className='text-end mt-4 text-black'>
+                        <span>Don't have an account? </span>
+                        <Link
+                            to='/signup'
+                            className='hover:text-primary font-bold'
+                        >
+                            Sign up
+                        </Link>
                     </div>
                 </form>
             </div>

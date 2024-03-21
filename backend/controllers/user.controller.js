@@ -2,7 +2,7 @@ import User from '../models/user.model.js';
 
 export const getUsersForSidebar = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
+        const loggedInUserId = req.uid;
 
         let user = await User.findById(loggedInUserId);
 
@@ -23,7 +23,7 @@ export const getUsersForSidebar = async (req, res) => {
 
 export const getRequests = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
+        const loggedInUserId = req.uid;
 
         let user = await User.findById(loggedInUserId);
 
@@ -42,11 +42,11 @@ export const getRequests = async (req, res) => {
 
 export const sendContactRequest = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
-        const { username } = req.params;
+        const loggedInUsername = req.username;
+        const { username: receiverUsername } = req.params;
 
-        let sender = await User.findById(loggedInUserId);
-        let receiver = await User.findOne({ username });
+        let sender = await User.findOne({ username: loggedInUsername });
+        let receiver = await User.findOne({ username: receiverUsername });
 
         if (!sender) {
             return res.status(400).json({
@@ -60,38 +60,37 @@ export const sendContactRequest = async (req, res) => {
             });
         }
 
-        const requestId = receiver._id;
-
-        if (loggedInUserId === requestId) {
+        if (loggedInUsername === receiverUsername) {
             return res.status(400).json({
                 error: 'Cannot send a request to yourself!',
             });
         }
 
         if (
-            receiver.contacts.includes(loggedInUserId) ||
-            sender.contacts.includes(requestId)
+            receiver.contacts.includes(loggedInUsername) ||
+            sender.contacts.includes(receiverUsername)
         ) {
             return res.status(400).json({
                 error: 'User is already in your contacts',
             });
         }
 
-        if (receiver.requests.includes(loggedInUserId)) {
+        if (receiver.requests.includes(loggedInUsername)) {
             return res.status(400).json({
                 error: 'Request already sent',
             });
         }
 
-        if (sender.requests.includes(requestId)) {
+        if (sender.requests.includes(receiverUsername)) {
             return res.status(400).json({
                 error: 'Pending request from that user',
             });
         }
 
-        receiver.requests.push(loggedInUserId);
+        receiver.requests.push(loggedInUsername);
         await receiver.save();
-        res.status(201).json(loggedInUserId);
+
+        res.status(201).json(loggedInUsername);
     } catch (error) {
         console.log('Error in sendContactRequest: ', error.message);
         res.status(500).json({ error: 'Internal server error' });
@@ -100,11 +99,11 @@ export const sendContactRequest = async (req, res) => {
 
 export const acceptRequest = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
-        const { id: requestId } = req.params;
+        const loggedInUserId = req.uid;
+        const { username: receiverUsername } = req.params;
 
         let user = await User.findById(loggedInUserId);
-        let sender = await User.findById(requestId);
+        let sender = await User.findOne({ username: receiverUsername });
 
         if (!user) {
             return res.status(400).json({
@@ -118,7 +117,7 @@ export const acceptRequest = async (req, res) => {
             });
         }
 
-        if (!user.requests.includes(requestId)) {
+        if (!user.requests.includes(receiverUsername)) {
             return res.status(400).json({
                 error: 'Request does not exist',
             });
@@ -126,17 +125,17 @@ export const acceptRequest = async (req, res) => {
 
         if (
             sender.contacts.includes(loggedInUserId) ||
-            user.contacts.includes(requestId)
+            user.contacts.includes(receiverUsername)
         ) {
             return res.status(400).json({
                 error: 'User is already in your contacts',
             });
         }
 
-        await user.requests.pull(requestId);
+        await user.requests.pull(receiverUsername);
 
-        user.contacts.push(requestId);
-        sender.contacts.push(loggedInUserId);
+        user.contacts.push(receiverUsername);
+        sender.contacts.push(req.username);
         await Promise.all([user.save(), sender.save()]);
         res.status(201).json(user.contacts);
     } catch (error) {
@@ -147,17 +146,11 @@ export const acceptRequest = async (req, res) => {
 
 export const rejectRequest = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
-        const { id: requestId } = req.params;
+        const loggedInUserId = req.uid;
+        const { username: receiverUsername } = req.params;
 
         let user = await User.findById(loggedInUserId);
-        let sender = await User.findById(requestId);
-
-        if (!user) {
-            return res.status(400).json({
-                error: 'User does not exist',
-            });
-        }
+        let sender = await User.findOne({ username: receiverUsername });
 
         if (!sender) {
             return res.status(400).json({
@@ -165,13 +158,19 @@ export const rejectRequest = async (req, res) => {
             });
         }
 
-        if (!user.requests.includes(requestId)) {
+        if (!user) {
+            return res.status(400).json({
+                error: 'User does not exist',
+            });
+        }
+
+        if (!user.requests.includes(receiverUsername)) {
             return res.status(400).json({
                 error: 'Request does not exist',
             });
         }
 
-        await user.requests.pull(requestId);
+        await user.requests.pull(receiverUsername);
         await user.save();
         res.status(201).json(user.contacts);
     } catch (error) {

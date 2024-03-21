@@ -3,7 +3,8 @@ import { RequestList } from '../../components/request-list/RequestList';
 import { Sidebar } from '../../components/sidebar/Sidebar';
 
 export const Home = () => {
-    const view = 'requests';
+    // Receive view from global state
+    const view = 'messages';
 
     return (
         <div className='drawer md:drawer-open'>
