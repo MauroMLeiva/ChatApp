@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 
 export const useChatStore = () => {
     const { uid, username } = useSelector((state) => state.auth);
-    const { messages, activeConversation, isChatSelected, requests } =
+    const { messages, activeConversation, isChatSelected, contacts, requests } =
         useSelector((state) => state.chat);
 
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export const useChatStore = () => {
             const contacts = [];
 
             data.map((element) => {
-                contacts.push(element.username);
+                contacts.push([element.username, element.profilePic]);
             });
 
             dispatch(setContacts(contacts));
@@ -61,9 +61,9 @@ export const useChatStore = () => {
         }
     };
 
-    const selectConversation = async (username) => {
+    const selectConversation = async (username, profilePic) => {
         getMessages(username);
-        dispatch(setActiveConversation(username));
+        dispatch(setActiveConversation([username, profilePic]));
     };
 
     const sendMessage = async (username, message) => {
@@ -115,6 +115,7 @@ export const useChatStore = () => {
         activeConversation,
         isChatSelected,
         requests,
+        contacts,
 
         // Methods
         getContacts,

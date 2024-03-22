@@ -18,6 +18,7 @@ export const Messages = () => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
     return (
         <div className='px-4 flex-1 mt-2 overflow-y-auto overflow-x-hidden'>
             {messages.map((msg) => (

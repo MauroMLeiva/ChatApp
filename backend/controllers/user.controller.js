@@ -16,7 +16,7 @@ export const getUsersForSidebar = async (req, res) => {
 
         const filteredUsers = await User.find({
             username: { $in: users },
-        }).select('username');
+        }).select('username profilePic');
 
         res.status(200).json(filteredUsers);
     } catch (error) {

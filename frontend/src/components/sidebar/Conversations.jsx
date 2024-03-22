@@ -10,8 +10,8 @@ export const Conversations = () => {
                 <div className='py-2 flex flex-col overflow-auto mb-2'>
                     {contacts.map((contact) => (
                         <ConversationSingular
-                            key={contact}
-                            username={contact}
+                            key={contact.username}
+                            contact={contact}
                         />
                     ))}
                 </div>

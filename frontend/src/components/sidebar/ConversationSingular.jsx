@@ -1,12 +1,13 @@
 import { useChatStore } from '../../hooks/useChatStore';
 import { useUiStore } from '../../hooks/useUiStore';
 
-export const ConversationSingular = ({ username }) => {
+export const ConversationSingular = ({ contact }) => {
+    const [username, profilePic] = contact;
     const { selectConversation } = useChatStore();
     const { setMsgsView } = useUiStore();
 
     const handleClick = () => {
-        selectConversation(username);
+        selectConversation(username, profilePic);
         setMsgsView();
     };
 
@@ -18,10 +19,7 @@ export const ConversationSingular = ({ username }) => {
             >
                 <div className='avatar mr-2 online'>
                     <div className='w-12 rounded-full'>
-                        <img
-                            src='https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg'
-                            alt='user profile picture'
-                        />
+                        <img src={profilePic} alt='user profile picture' />
                     </div>
                 </div>
                 <div className='flex flex-col flex-1'>

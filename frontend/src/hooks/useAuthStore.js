@@ -10,7 +10,7 @@ import { logoutChat } from '../store/auth/chatSlice';
 import { logoutUi } from '../store/uiSlice';
 
 export const useAuthStore = () => {
-    const { uid, status, username, errorMessage } = useSelector(
+    const { uid, status, username, profilePic, errorMessage } = useSelector(
         (state) => state.auth
     );
     const dispatch = useDispatch();
@@ -26,7 +26,13 @@ export const useAuthStore = () => {
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
-            dispatch(login({ username: data.username, uid: data.uid }));
+            dispatch(
+                login({
+                    username: data.username,
+                    uid: data.uid,
+                    profilePic: data.profilePic,
+                })
+            );
         } catch (error) {
             dispatch(logout('Email o password incorrectos'));
             setTimeout(() => {
@@ -57,7 +63,13 @@ export const useAuthStore = () => {
 
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
-            dispatch(login({ username: data.username, uid: data.uid }));
+            dispatch(
+                login({
+                    username: data.username,
+                    uid: data.uid,
+                    profilePic: data.profilePic,
+                })
+            );
         } catch (error) {
             dispatch(logout(error.response.data?.msg || 'Invalid form'));
             setTimeout(() => {
@@ -94,6 +106,7 @@ export const useAuthStore = () => {
         username,
         uid,
         errorMessage,
+        profilePic,
 
         // Methods
         startLogin,

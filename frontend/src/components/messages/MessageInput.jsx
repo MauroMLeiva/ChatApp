@@ -12,7 +12,7 @@ export const MessageInput = () => {
 
     const handleInput = (event) => {
         event.preventDefault();
-        sendMessage(activeConversation, message);
+        sendMessage(activeConversation[0], message);
         onResetForm();
     };
 

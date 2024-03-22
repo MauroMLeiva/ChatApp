@@ -20,6 +20,7 @@ const NoChatSelected = () => {
 
 const ChatSelected = () => {
     const { activeConversation } = useChatStore();
+    const [username, profilePic] = activeConversation;
     return (
         <>
             <div className='bg-primary px-4 py-4 mb-2 flex items-center'>
@@ -31,13 +32,10 @@ const ChatSelected = () => {
                 </label>
 
                 <div className='w-10 rounded-full mr-4'>
-                    <img
-                        src='https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg'
-                        alt='user profile picture'
-                    />
+                    <img src={profilePic} alt='user profile picture' />
                 </div>
                 <span className='label-text mr-1'> To: </span>
-                <span className='font-bold'>{activeConversation}</span>
+                <span className='font-bold'>{username}</span>
             </div>
 
             <Messages />
