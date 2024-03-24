@@ -30,8 +30,16 @@ export const authSlice = createSlice({
         clearErrorMessage: (state) => {
             state.errorMessage = undefined;
         },
+        setProfilePic: (state, { payload }) => {
+            state.profilePic = payload;
+        },
     },
 });
 
-export const { login, logout, checkingCredentials, clearErrorMessage } =
-    authSlice.actions;
+export const {
+    login,
+    logout,
+    checkingCredentials,
+    clearErrorMessage,
+    setProfilePic,
+} = authSlice.actions;

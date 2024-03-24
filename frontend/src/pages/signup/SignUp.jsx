@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { useAuthStore } from '../../hooks/useAuthStore';
 
@@ -42,7 +41,7 @@ export const SignUp = () => {
         >
             <div className='w-full p-6 rounded-lg shadow-lg bg-secondary bg-clip-padding'>
                 <h1 className='text-3xl font-semibold text-center text-black'>
-                    Create Account (logo)
+                    Create Account
                 </h1>
 
                 <form>

@@ -10,7 +10,7 @@ export const LogoutBtn = () => {
 
     return (
         <button
-            className='flex mt-auto gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white'
+            className='flex gap-2 items-center rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white w-full'
             onClick={handleLogout}
         >
             <BiLogOut className='w-10 h-10 cursor-pointer' />

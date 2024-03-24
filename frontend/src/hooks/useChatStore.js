@@ -7,9 +7,9 @@ import {
     setRequests,
 } from '../store/auth/chatSlice';
 import toast from 'react-hot-toast';
+import notification from '../assets/notification.mp3';
 
 export const useChatStore = () => {
-    const { uid, username } = useSelector((state) => state.auth);
     const { messages, activeConversation, isChatSelected, contacts, requests } =
         useSelector((state) => state.chat);
 
@@ -109,6 +109,22 @@ export const useChatStore = () => {
         }
     };
 
+    const newMsg = (message, senderUsername) => {
+        toast(`New message from ${senderUsername}`);
+        const sound = new Audio(notification);
+        sound.play();
+
+        if (senderUsername != activeConversation[0]) {
+            return;
+        }
+
+        const newMessages = [
+            ...messages,
+            [message.message, message.senderId, message.updatedAt],
+        ];
+        dispatch(setMessages(newMessages));
+    };
+
     return {
         // Props
         messages,
@@ -126,5 +142,6 @@ export const useChatStore = () => {
         acceptRequest,
         rejectRequest,
         sendRequest,
+        newMsg,
     };
 };

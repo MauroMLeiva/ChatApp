@@ -1,6 +1,7 @@
 import Conversation from '../models/conversation.model.js';
 import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
+import { getReceiverSocketId, io } from '../socket/socket.js';
 
 export const sendMessage = async (req, res) => {
     try {
@@ -34,6 +35,17 @@ export const sendMessage = async (req, res) => {
 
         // Update conversation and msg DB at the same time
         await Promise.all([conversation.save(), newMessage.save()]);
+
+        const senderUsername = req.username;
+
+        const receiverSocketId = getReceiverSocketId(username);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit(
+                'newMessage',
+                newMessage,
+                senderUsername
+            );
+        }
 
         res.status(201).json(newMessage);
     } catch (error) {

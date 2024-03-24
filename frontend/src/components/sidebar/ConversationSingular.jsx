@@ -1,3 +1,4 @@
+import { useSocketContext } from '../../context/SocketContext';
 import { useChatStore } from '../../hooks/useChatStore';
 import { useUiStore } from '../../hooks/useUiStore';
 
@@ -6,7 +7,12 @@ export const ConversationSingular = ({ contact }) => {
     const { selectConversation } = useChatStore();
     const { setMsgsView } = useUiStore();
 
+    const { onlineUsers } = useSocketContext();
+    const isOnline = onlineUsers.includes(username);
+
     const handleClick = () => {
+        document.getElementById('drawer-sidebar').checked = false;
+
         selectConversation(username, profilePic);
         setMsgsView();
     };
@@ -17,7 +23,9 @@ export const ConversationSingular = ({ contact }) => {
                 className='flex gap-2 items-center text-start rounded p-2 py-1 cursor-pointer hover:bg-primary text-black hover:text-white'
                 onClick={handleClick}
             >
-                <div className='avatar mr-2 online'>
+                <div
+                    className={`avatar mr-2 ${isOnline ? 'online' : 'offline'}`}
+                >
                     <div className='w-12 rounded-full'>
                         <img src={profilePic} alt='user profile picture' />
                     </div>

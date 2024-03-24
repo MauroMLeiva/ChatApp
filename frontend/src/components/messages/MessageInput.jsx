@@ -1,6 +1,7 @@
 import { IoSend } from 'react-icons/io5';
 import { useChatStore } from '../../hooks/useChatStore';
 import { useForm } from '../../hooks/useForm';
+import toast from 'react-hot-toast';
 
 const intialForm = {
     message: '',
@@ -12,6 +13,13 @@ export const MessageInput = () => {
 
     const handleInput = (event) => {
         event.preventDefault();
+
+        const newMessage = message.trim();
+        if (newMessage.length == 0) {
+            toast.error('Message is empty');
+            return;
+        }
+
         sendMessage(activeConversation[0], message);
         onResetForm();
     };

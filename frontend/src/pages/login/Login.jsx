@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useAuthStore } from '../../hooks/useAuthStore';
+import ChatIcon from '../../assets/ChatIcon.svg';
+import toast from 'react-hot-toast';
 
 const formData = {
     username: '',
@@ -22,9 +24,13 @@ export const Login = () => {
         md:min-w-[450px] mx-auto'
         >
             <div className='w-full p-6 rounded-lg shadow-lg bg-secondary bg-clip-padding'>
-                <h1 className='text-3xl font-semibold text-center text-black'>
-                    Login (replace w/ logo)
-                </h1>
+                <div className='flex items-center justify-center'>
+                    <img
+                        src={ChatIcon}
+                        className='w-20 h-20'
+                        alt='Chat App Icon'
+                    />
+                </div>
 
                 <form>
                     <div>

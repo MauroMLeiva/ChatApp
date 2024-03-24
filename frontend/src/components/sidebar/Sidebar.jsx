@@ -1,8 +1,8 @@
 import { AddContact } from './AddContact';
 import { Conversations } from './Conversations';
-import { LogoutBtn } from './LogoutBtn';
 import { Requests } from './Requests';
 import { Search } from './Search';
+import { Settings } from './Settings';
 
 export const Sidebar = () => {
     return (
@@ -14,7 +14,7 @@ export const Sidebar = () => {
             <div className='divider divider-primary px-3 mt-1' />
             <Conversations />
             <div className='divider divider-primary px-3 mt-1' />
-            <LogoutBtn />
+            <Settings />
         </div>
     );
 };

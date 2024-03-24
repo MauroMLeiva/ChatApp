@@ -3,9 +3,13 @@ import React, { useEffect, useRef } from 'react';
 import { useAuthStore } from '../../hooks/useAuthStore';
 import { useChatStore } from '../../hooks/useChatStore';
 import { MessageSingular } from './MessageSingular';
+import { useListenMessages } from '../../hooks/useListenMessages';
 
 export const Messages = () => {
     const { messages } = useChatStore();
+
+    useListenMessages();
+
     const { uid } = useAuthStore();
 
     const messagesEndRef = useRef(null);

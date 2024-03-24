@@ -19,6 +19,7 @@ export const Search = () => {
         contacts.forEach((contact) => {
             if (contact[0] == search) {
                 found = true;
+                document.getElementById('drawer-sidebar').checked = false;
                 return selectConversation(contact[0], contact[1]);
             }
         });
