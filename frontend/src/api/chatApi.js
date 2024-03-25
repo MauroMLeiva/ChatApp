@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { getEnvVariables } from '../helpers/getEnvVariables';
 
-const { VITE_API_URL } = getEnvVariables();
+const api_url = 'https://chatapp-c0vh.onrender.com/api';
 
 const chatApi = axios.create({
-    baseURL: VITE_API_URL,
+    baseURL: api_url,
 });
 
 chatApi.interceptors.request.use((config) => {
