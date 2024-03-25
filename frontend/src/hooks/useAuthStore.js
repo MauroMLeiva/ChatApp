@@ -26,7 +26,7 @@ export const useAuthStore = () => {
             const newUsername = username.trim().toLowerCase();
 
             const { data } = await chatApi.post('/auth/login', {
-                newUsername,
+                username: newUsername,
                 password,
             });
 
