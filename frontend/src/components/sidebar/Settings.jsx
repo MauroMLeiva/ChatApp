@@ -4,7 +4,7 @@ import { ChangeProfilePic } from './ChangeProfilePic';
 import { useAuthStore } from '../../hooks/useAuthStore';
 
 export const Settings = () => {
-    const { username } = useAuthStore();
+    const { username, profilePic } = useAuthStore();
     return (
         <>
             <button

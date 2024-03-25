@@ -4,7 +4,7 @@ import { useChatStore } from '../../hooks/useChatStore';
 
 const HasNoRequests = () => {
     return (
-        <div className='flex flex-col items-center justify-center px-4 text-center text-white font-bold text-xl gap-2 h-lvh'>
+        <div className='flex flex-col items-center justify-center px-4 text-center text-white font-bold text-xl gap-2 h-dvh'>
             <span>You have no pending requests</span>
             <label
                 htmlFor='drawer-sidebar'
@@ -45,7 +45,7 @@ export const RequestList = () => {
     const reqs = ['waldomero', 'biri', 'juerzo'];
 
     return (
-        <div className='flex flex-col w-lvw h-lvh'>
+        <div className='flex flex-col w-lvw h-dvh'>
             {reqs.length == 0 ? <HasNoRequests /> : <HasRequests />}
         </div>
     );

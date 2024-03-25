@@ -6,7 +6,7 @@ import { useChatStore } from '../../hooks/useChatStore';
 
 const NoChatSelected = () => {
     return (
-        <div className='flex flex-col items-center justify-center px-4 text-center text-white font-bold text-xl gap-2 h-lvh'>
+        <div className='flex flex-col items-center justify-center px-4 text-center text-white font-bold text-xl gap-2 h-dvh'>
             <span>Select a conversation to start messaging</span>
             <label
                 htmlFor='drawer-sidebar'
@@ -48,7 +48,7 @@ export const MessageContainer = () => {
     const { isChatSelected } = useChatStore();
 
     return (
-        <div className='flex flex-col w-lvw h-lvh'>
+        <div className='flex flex-col w-lvw h-dvh'>
             {isChatSelected ? <ChatSelected /> : <NoChatSelected />}
         </div>
     );
