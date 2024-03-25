@@ -23,8 +23,10 @@ export const useAuthStore = () => {
         dispatch(checkingCredentials());
 
         try {
+            const newUsername = username.trim().toLowerCase();
+
             const { data } = await chatApi.post('/auth/login', {
-                username,
+                newUsername,
                 password,
             });
 

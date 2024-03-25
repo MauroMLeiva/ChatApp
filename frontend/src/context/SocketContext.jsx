@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (status == 'authenticated') {
-            const socket = io('http://localhost:5000', {
+            const socket = io('https://chatapp-c0vh.onrender.com', {
                 query: {
                     username,
                 },
